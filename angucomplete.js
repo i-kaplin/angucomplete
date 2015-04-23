@@ -79,7 +79,17 @@ angular.module('angucomplete', [] )
 
                         var image = "";
                         if ($scope.imageField) {
-                            image = imageUri + responseData[i][$scope.imageField];
+                            var path = $scope.imageField.split('.');
+                            if (path && path.length > 1){
+                                var responseDataCopy = responseData[i];
+                                var index, len = path.length;
+                                for (index = 0; index < len; index++){
+                                    responseDataCopy = responseDataCopy[path[index]];
+                                }
+                                image = imageUri + responseDataCopy;
+                            } else {
+                                image = imageUri + responseData[i][$scope.imageField];
+                            }
                         }
 
                         var text = titleCode.join(' ');
